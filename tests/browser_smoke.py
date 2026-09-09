@@ -24,6 +24,10 @@ try:
             assert response.status == 200
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
             assert page.locator('main').count() == 1
+            assert page.locator('.example-tile').all_text_contents() == ['Draw', 'Music', 'Build', 'Story', 'Practice', 'Terminal']
+            assert 'not a screenshot' in page.locator('.launcher-example figcaption').inner_text()
+            assert page.locator('.launcher-example button').count() == 0
+            assert page.locator('.example-tile').evaluate_all('(els)=>els.every(e=>e.scrollWidth<=e.clientWidth)')
             assert page.locator('main #progress').count() == 1
             assert page.locator('img').evaluate_all('(els)=>els.every(e=>e.complete && e.naturalWidth>0)')
             page.get_by_role('link', name='Meet Cairn', exact=True).click()
