@@ -1,8 +1,9 @@
 # Cairn site
 
-The public-facing website for [Cairn Linux](https://github.com/Cairn-Linux/cairn).
-The copy and visual design are provisional. Cairn itself is pre-alpha; this
-website does not offer an operating-system download.
+The public-facing website for [Cairn Linux](https://github.com/Cairn-Linux/cairn),
+live at <https://cairnlinux.com>. The copy and visual design are provisional.
+Cairn itself is pre-alpha; this website does not offer an operating-system
+download.
 
 ## Preview
 
@@ -29,18 +30,25 @@ back to Arial/sans-serif. No font service or tracking script is loaded.
 
 ## Deploy
 
-Publish **only `site/`** to any static HTTPS host. There is no application
-server, database, environment variable or secret to configure. Do not serve
-the repository root, which also contains contributor files and tests.
+The site is live at <https://cairnlinux.com>, served by Cloudflare.
+Cloudflare's Workers Builds is connected to this repository: every change
+to `main`, a merged pull request included, is published to cairnlinux.com
+within moments, and every pull request gets a "Workers Builds: cairn-site"
+check. **Merging is publishing.** Run the checks under "Verify" before a
+merge, not after.
 
-For a static-host Git integration, choose `main`, no build command, and
-`site` as the publish/output directory. Disable framework detection if it
-tries to build a JavaScript app. On GitHub Pages, use a Pages workflow that
-uploads `site/`; do not select the repository root as the source.
+The deployment is set up in Cloudflare, not here: there is no workflow file
+in this repository. It publishes **only `site/`**, with no build command.
+There is no application server, database, environment variable or secret.
+Never serve the repository root, which also holds contributor files and
+tests. Changes to the host, domain, TLS or DNS go through Mason.
 
-No deployment integration is enabled in this repository. Choose the host,
-custom domain, TLS and DNS cutover with Mason before enabling publication.
-Do not add an automatic deploy-on-push workflow without that approval.
+The page says it loads no analytics or tracking scripts, so keep
+Cloudflare features that add scripts to it turned off: Bot Fight Mode,
+JavaScript detections and Web Analytics. The browser test below runs
+against a local copy and cannot see what Cloudflare adds; check the live
+page instead, for example with
+`curl -s https://cairnlinux.com/ | grep -c cdn-cgi`, which should print 0.
 
 ## Verify
 
